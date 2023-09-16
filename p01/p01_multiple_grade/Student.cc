@@ -96,4 +96,6 @@ void Student::MultiGrades(std::string palabra) {
     }
   }
   std::cout << std::endl;
-}
+  NuevaNota(smap);
+  // GuardarArchivo(smap);
+} // prueba
