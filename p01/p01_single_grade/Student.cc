@@ -86,7 +86,7 @@ void EliminarAlumno(std::map<std::string, float>& smap) {
         std::cout << "Nuevas Notas" << std::endl;
         for(const auto& p: smap) std::cout << p.first << ": " << p.second << std::endl;
       }
-      std::cout << "Desea eliminar a algun alumno?: ";
+      std::cout << "Desea eliminar a algun otro alumno?: ";
       std::cin >> afirmacion;
     }
   }
