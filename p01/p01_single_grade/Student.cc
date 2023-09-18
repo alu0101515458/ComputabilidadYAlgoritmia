@@ -49,7 +49,7 @@ void NuevaNota(std::map<std::string, float>& smap) {
         }
         std::cout << "\n";
         std::cout << "Nuevas Notas" << std::endl;
-        for(const auto& p: smap) std::cout << p.first << " " << p.second << std::endl;
+        for(const auto& p: smap) std::cout << p.first << ": " << p.second << std::endl;
       }
       std::cout << "Desea insertar otra nota de otro alumno?: ";
       std::cin >> afirmacion;
@@ -64,7 +64,7 @@ void GuardarArchivo(std::map<std::string, float>& smap) {
   if(!output_file) {
    std::cout << "error" << std::endl;
   }
-  for(const auto& p: smap) output_file << p.first << " " << p.second << std::endl;
+  for(const auto& p: smap) output_file << p.first << ": " << p.second << std::endl;
   output_file.close();
 }
 */

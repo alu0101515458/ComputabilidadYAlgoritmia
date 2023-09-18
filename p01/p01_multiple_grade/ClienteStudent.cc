@@ -23,13 +23,13 @@
 
 int main(int argc, char* argv[]) {
   if(argc != 2) {
-    std::cout << "Modo de empleo: ./p01_single_grades grades.txt" << std::endl;
-    std::cout << "Pruebe ’p01_single_grades --help’ para mas informacion." << std::endl;
+    std::cout << "Modo de empleo: ./p01_multiple_grades grades.txt" << std::endl;
+    std::cout << "Pruebe ’p01_multiple_grades --help’ para mas informacion." << std::endl;
     return 0;
   }
   std::string palabra = argv[1];
   if(argc == 2 && palabra == "--help") {
-    std::cout << "La entrada que debería recibir es: ./p01_single_grades y un fichero de texto donde se almacenen las notas." << std::endl;
+    std::cout << "La entrada que debería recibir es: ./p01_multiple_grades y un fichero de texto donde se almacenen las notas." << std::endl;
     return 0;
   }
   Student Estudiante;

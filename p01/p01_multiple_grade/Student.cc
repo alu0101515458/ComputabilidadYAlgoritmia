@@ -133,7 +133,7 @@ void Student::MultiGrades(std::string palabra) {
       clave = p.first;
     }
   }
-  std::cout << "\n";
+  std::cout << "\n\n";
   NuevaNota(smap);
   // GuardarArchivo(smap);
   // std::cout << "\n";
