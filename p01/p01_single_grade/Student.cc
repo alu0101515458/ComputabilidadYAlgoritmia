@@ -21,6 +21,7 @@
 // 12/09/2023 - Creacion (primera version) del codigo
 #include "Student.h"
 
+// FUNCION PARA AÑADIR UN/UNOS NUEVO/S ALUMNO/S CON SU/S RESPECTIVA/S NOTA/S
 void NuevaNota(std::map<std::string, float>& smap) {
   std::string afirmacion;
   std::cout << "Le gustaría insertar alguna nueva nota de otro alumno?: " << std::endl;
@@ -58,8 +59,8 @@ void NuevaNota(std::map<std::string, float>& smap) {
 }
 
 /*
+// FUNCION PARA GUARDAR EN ARCHIVO LA LISTA DE ALUMNOS
 void GuardarArchivo(std::map<std::string, float>& smap) {
-  // GUARDARLO EN ARCHIVO
   std::ofstream output_file{"resultados.txt"};
   if(!output_file) {
    std::cout << "error" << std::endl;
@@ -70,6 +71,7 @@ void GuardarArchivo(std::map<std::string, float>& smap) {
 */
 
 /*
+// FUNCION PARA ELIMINAR A UN/UNOS USUARIO/S DE LA LISTA DE ALUMNOS
 void EliminarAlumno(std::map<std::string, float>& smap) {
   std::string afirmacion, alumno;
   std::cout << "Desea eliminar a algun alumno?: " << std::endl;
@@ -93,7 +95,30 @@ void EliminarAlumno(std::map<std::string, float>& smap) {
 }
 */
 
+/*
+void MaxMin(std::map<std::string, float> smap) {
+  float max = -1.f, min = 11.f;
+  for(const auto& p: smap) {
+    if(max < p.second) max = p.second;
+    if(min > p.second) min = p.second;
+  }
+  std::cout << "Maximo: " << max << ", minimo: " << min << std::endl;
+}
+*/
 
+/*
+void Media(std::map<std::string, float> smap) {
+  int count = 0;
+  float result = 0.f;
+  for(const auto& p: smap) {
+    result += p.second;
+    ++count;
+  }
+  std::cout << "MEDIA: " << result/count << std::endl;
+}
+*/
+
+// FUNCION PRINCIPAL LA CUAL RECOGE LA NOTA MÁS ALTA DE UN ALUMNO Y MUESTRA POR PANTALLA
 void Student::UnicGrades(std::string palabra) {
   std::ifstream ifile(palabra);
   std::string aux;
@@ -120,4 +145,6 @@ void Student::UnicGrades(std::string palabra) {
   // GuardarArchivo(smap);
   // std::cout << "\n";
   // EliminarAlumno(smap);
+  // MaxMin(smap);
+  // Media(smap);
 }

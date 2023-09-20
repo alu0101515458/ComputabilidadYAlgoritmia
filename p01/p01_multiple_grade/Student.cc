@@ -20,6 +20,7 @@
 // 12/09/2023 - Creacion (primera version) del codigo
 #include "Student.h"
 
+// FUNCION PARA AÑADIR UN/UNOS NUEVO/S ALUMNO/S CON SU/S RESPECTIVA/S NOTA/S
 void NuevaNota(std::multimap<std::string, float>& smap) {
   std::string afirmacion;
   std::cout << "Le gustaría insertar alguna nueva nota de otro alumno?: " << std::endl;
@@ -60,6 +61,7 @@ void NuevaNota(std::multimap<std::string, float>& smap) {
 }
 
 /*
+// FUNCION PARA GUARDAR EN ARCHIVO LOS RESULTADOS
 void GuardarArchivo(std::multimap<std::string, float>& smap) {
  GUARDARLO EN ARCHIVO
  std::ofstream output_file{"resultados.txt"};
@@ -77,6 +79,7 @@ void GuardarArchivo(std::multimap<std::string, float>& smap) {
 */
 
 /*
+// FUNCION PARA ELIMINAR A UN/UNOS USUARIO/S DE LA LISTA DE ALUMNOS
 void EliminarAlumno(std::multimap<std::string, float>& smap) {
   std::string afirmacion, alumno;
   std::cout << "Desea eliminar a algun alumno?: " << std::endl;
@@ -110,6 +113,28 @@ void EliminarAlumno(std::multimap<std::string, float>& smap) {
 }
 */
 
+/*
+void MaxMin(std::multimap<std::string, float> smap) {
+  float max = -1.f, min = 11.f;
+  for(const auto& p: smap) {
+    if(max < p.second) max = p.second;
+    if(min > p.second) min = p.second;
+  }
+  std::cout << "Maximo: " << max << ", minimo: " << min << std::endl;
+}
+*/
+
+void Media(std::multimap<std::string, float> smap) {
+  float result = 0.f;
+  int count = 0;
+  for(const auto& p: smap) {
+    result += p.second;
+    ++count;
+  }
+  std::cout << "MEDIA: " << result/count << std::endl;
+}
+
+// FUNCION PRINCIPAL LA CUAL AGRUPA LAS NOTAS DE UN ALUMNO PARA POSTERIOR MOSTRAR POR PANTALLA
 void Student::MultiGrades(std::string palabra) {
   std::ifstream ifile(palabra);
   std::string aux;
@@ -138,4 +163,6 @@ void Student::MultiGrades(std::string palabra) {
   // GuardarArchivo(smap);
   // std::cout << "\n";
   // EliminarAlumno(smap);
+  // MaxMin(smap);
+  Media(smap);
 }
