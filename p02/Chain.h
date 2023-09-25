@@ -29,6 +29,7 @@
 class Chain {
   public:
     Chain();
+    Chain(std::string chain);
     Chain(std::vector<Symbol> chain);
 
     friend bool operator<(const Chain& first_chain, const Chain& second_chain);
@@ -40,7 +41,7 @@ class Chain {
 
     // METODOS SOLVENTADORES
     Alphabet GetAlphabet(std::string aux);
-    std::string Inverse(std::string aux);
+    Chain Inverse(std::string aux);
     int Length(std::string aux);
 
   private:

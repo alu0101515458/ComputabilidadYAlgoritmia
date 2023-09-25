@@ -38,6 +38,7 @@ class Symbol {
     friend std::ostream& operator<<(std::ostream& os, const Symbol& symbol);
     friend bool operator==(const Symbol& first_symbol, const Symbol& second_symbol);
     friend bool operator<(const Symbol& first_symbol, const Symbol& second_symbol);
+    
     char GetSymbol() const;
 
   private:

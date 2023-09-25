@@ -71,19 +71,23 @@ void Language::Add(const Chain& chain) {
 /**
  * @brief Obtenemos el prefijo de una cadena.
  * 
- * @param aux (string de la que vamos a sacar el prefijo)
+ * @param aux (Cadena de la que vamos a sacar el prefijo)
  * @return Language 
  */
 Language Language::Prefix(std::string aux) {
   Language Result;
+  Chain Cadena(aux);
   std::vector<Symbol> chain;
 
-  Result.Add({{'&'}}); // Añadimos cadena vacia.
-  chain.push_back(aux[0]);
+  chain.push_back('&');
+  Result.Add(chain); // Añadimos cadena vacia.
+  chain.clear();
+
+  chain.push_back(Cadena.GetSymbols()[0]);
   Result.Add(chain); // Añadimos primer simbolo de la cadena.
 
-  for (unsigned int j = 1; j < aux.length(); ++j) {
-    chain.push_back(aux[j]);
+  for (int j = 1; j < Cadena.GetSymbolsLength(); ++j) {
+    chain.push_back(Cadena.GetSymbols()[j]);
     Result.Add(chain);
   }
   return Result;
@@ -93,23 +97,26 @@ Language Language::Prefix(std::string aux) {
 /**
  * @brief Obtenemos el sufijo de una cadena.
  * 
- * @param aux (cadena de la que vamos a sacar el sufijo)
+ * @param aux (Cadena de la que vamos a sacar el sufijo)
  * @return Language 
  */
 Language Language::Sufix(std::string aux) {
   Language Result;
-  Chain Aux;
+  Chain Inversa;
   std::vector<Symbol> chain, chain_aux;
-  std::string inversa = Aux.Inverse(aux);
+  Inversa = Inversa.Inverse(aux);
 
-  Result.Add({{'&'}}); // Añadimos cadena vacia.
-  chain.push_back(inversa[0]);
+  chain.push_back('&');
+  Result.Add(chain); // Añadimos cadena vacia.
+  chain.clear();
+
+  chain.push_back(Inversa.GetSymbols()[0]);
   Result.Add(chain); // Añadimos el primer simbolo de la cadena.
 
   // Utilizamos un for para iterar entre los simbolos de la cadena
   // y otro for para alternar el resultado obtenido ((ba) -> (ab)).
-  for (unsigned int i = 1; i < inversa.size(); ++i) {
-    chain.push_back(inversa[i]);
+  for (int i = 1; i < Inversa.GetSymbolsLength(); ++i) {
+    chain.push_back(Inversa.GetSymbols()[i]);
     for (int j = chain.size() - 1; j >= 0; --j) {
       chain_aux.push_back(chain[j]);
     }

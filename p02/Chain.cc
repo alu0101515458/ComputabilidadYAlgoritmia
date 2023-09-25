@@ -24,6 +24,17 @@
 Chain::Chain() {}
 
 /**
+ * @brief Constructor de la cadena a partir de una string.
+ * 
+ * @param chain 
+ */
+Chain::Chain(std::string chain) {
+  for (unsigned int i = 0; i < chain.size(); ++i) {
+    chain_.push_back(chain[i]);
+  }
+}
+
+/**
  * @brief Constructor de la cadena a partir 
  * de un vector de simbolos.
  * 
@@ -90,6 +101,20 @@ void Chain::Add(const Symbol& Symbol) {
 }
 
 /**
+ * @brief Metodo que devuelve longitud de una cadena (string).
+ * 
+ * @param aux 
+ * @return int 
+ */
+int Chain::Length(std::string aux) {
+  int count = 0;
+  for (unsigned int i = 0; i < aux.size(); ++i) {
+    ++count;
+  }
+  return count;
+}
+
+/**
  * @brief Metodo que devuelve un alfabeto a partir de una cadena.
  * 
  * @param aux 
@@ -110,26 +135,12 @@ Alphabet Chain::GetAlphabet(std::string aux) {
  * @brief Metodo que devuelve la inversa de una cadena.
  * 
  * @param aux 
- * @return std::string 
+ * @return Chain
  */
-std::string Chain::Inverse(std::string aux) {
-  std::string result;
+Chain Chain::Inverse(std::string aux) {
+  Chain Result;
   for(int i = aux.size() - 1; i >= 0; --i) {
-    result.push_back(aux[i]);
+    Result.Add(aux[i]);
   }
-  return result;
-}
-
-/**
- * @brief Metodo que devuelve longitud de una cadena (string).
- * 
- * @param aux 
- * @return int 
- */
-int Chain::Length(std::string aux) {
-  int count = 0;
-  for (unsigned int i = 0; i < aux.size(); ++i) {
-    ++count;
-  }
-  return count;
+  return Result;
 }

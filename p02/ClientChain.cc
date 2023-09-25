@@ -62,9 +62,8 @@ int main(int argc, char* argv[]) {
     {
       while(ifile >> aux) {
         Chain Cadena;
-        std::string result;
-        result = Cadena.Inverse(aux);
-        ofile << result << std::endl;
+        Cadena = Cadena.Inverse(aux);
+        ofile << Cadena << std::endl;
       }
       break;
     }

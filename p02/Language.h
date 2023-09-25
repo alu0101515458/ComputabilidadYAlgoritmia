@@ -34,12 +34,12 @@ class Language {
     std::set<Chain> GetChains() const;    
     void Add(const Chain& chain);
 
+    // METODOS SOLVENTADORES
     Language Prefix(std::string aux);
     Language Sufix(std::string aux);
-    
+
   private:
     std::set<Chain> language_;
-    Alphabet alphabet_;
 };
 
 std::ostream& operator<<(std::ostream& os, const Language& language);
