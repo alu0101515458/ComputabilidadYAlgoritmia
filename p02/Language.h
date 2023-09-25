@@ -36,7 +36,7 @@ class Language {
 
     // METODOS SOLVENTADORES
     Language Prefix(std::string aux);
-    Language Sufix(std::string aux);
+    Language Suffix(std::string aux);
 
   private:
     std::set<Chain> language_;

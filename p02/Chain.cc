@@ -107,6 +107,7 @@ void Chain::Add(const Symbol& Symbol) {
  * @return int 
  */
 int Chain::Length(std::string aux) {
+  if(aux == "&") return 0; // Cadena vacia, su longitud = 0.
   int count = 0;
   for (unsigned int i = 0; i < aux.size(); ++i) {
     ++count;

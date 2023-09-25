@@ -100,7 +100,7 @@ Language Language::Prefix(std::string aux) {
  * @param aux (Cadena de la que vamos a sacar el sufijo)
  * @return Language 
  */
-Language Language::Sufix(std::string aux) {
+Language Language::Suffix(std::string aux) {
   Language Result;
   Chain Inversa;
   std::vector<Symbol> chain, chain_aux;
