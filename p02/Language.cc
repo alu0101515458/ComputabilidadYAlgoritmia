@@ -1,18 +1,52 @@
-#include "Language.h"
+// Universidad de La Laguna
+// Escuela Superior de Ingenierıa y Tecnologıa
+// Grado en Ingenierıa Informatica
+// Asignatura: Computabilidad y Algoritmia
+// Curso: 2º
+// Practica 2: Operaciones con cadenas
+// Autor: Tomas Javes Tommasone
+// Correo: alu0101515458@ull.edu.es
+// Fecha: 19/09/2023
+// Archivo ClientChain.cc: programa cliente.
+// Contiene la funcion main del proyecto que usa las clases Alphabet, Symbol,
+// Chain y Language para: obtener alfabétos, longitudes de cadenas,
+// inversas de cadenas, prefijos de cadenas y sufijos de cadenas.
 
+// Historial de revisiones
+// 19/09/2023 - Creacion (primera version) del codigo
+
+#include "Language.h"
+/**
+ * @brief Constructor del lenguaje.
+ * 
+ * @param
+ */
 Language::Language() {}
 
+/**
+ * @brief Obtenemos el set de cadenas a raiz de este
+ * método.
+ * 
+ * @param
+ * @return std::set<Chain> 
+ */
 std::set<Chain> Language::GetChains() const {
   return this->language_;
 }
 
-bool operator<(const Language& first_language, const Language& second_language) {
-  
-}
-
+/**
+ * @brief Sobrecarga del operador<< para poder mostrar
+ * un lenguaje de manera correcta.
+ * 
+ * @param os 
+ * @param language 
+ * @return std::ostream& 
+ */
 std::ostream& operator<<(std::ostream& os, const Language& language) {
   std::set<Chain>::iterator it = language.language_.begin();
   os << "{";
+  // De esta manera conseguiremos no obtener; {1, 2, }
+  // sino {1, 2}
   if (it != language.language_.end()) {
     os << *it;
     ++it;
@@ -25,58 +59,62 @@ std::ostream& operator<<(std::ostream& os, const Language& language) {
   return os;
 }
 
+/**
+ * @brief Insertamos una cadena al lenguaje.
+ * 
+ * @param chain 
+ */
 void Language::Add(const Chain& chain) {
   this->language_.insert(chain);
 }
 
-// {& , a , ab , abb , abba , abbab }
-// {& , 6 , 67 , 679 , 6793 , 67938 , 679383 , 6793836}
-// {& , h , ho , hol , hola }
-void Language::Prefix(std::string input_file, std::string output_file) {
-  std::ifstream ifile(input_file);
-  std::ofstream ofile(output_file);
-  std::string aux;
+/**
+ * @brief Obtenemos el prefijo de una cadena.
+ * 
+ * @param aux (string de la que vamos a sacar el prefijo)
+ * @return Language 
+ */
+Language Language::Prefix(std::string aux) {
+  Language Result;
+  std::vector<Symbol> chain;
 
-  while (ifile >> aux) { // Utilizar una lectura segura
-    Language Result;
-    Result.Add({{'&'}});
-    std::vector<Symbol> chain;
-    chain.push_back(aux[0]);
+  Result.Add({{'&'}}); // Añadimos cadena vacia.
+  chain.push_back(aux[0]);
+  Result.Add(chain); // Añadimos primer simbolo de la cadena.
+
+  for (unsigned int j = 1; j < aux.length(); ++j) {
+    chain.push_back(aux[j]);
     Result.Add(chain);
-    for(unsigned int j = 1; j < aux.length(); ++j) {
-      chain.push_back(aux[j]);
-      Result.Add(chain);
-    }
-    ofile << Result << std::endl;
   }
-  ifile.close();
-  ofile.close();
+  return Result;
 }
 
-// {& , b , ab , bab , bbab , abbab }
-// {& , 6 , 36 , 836 , 3836 , 93836 , 793836 , 6793836}
-// {& , a , la , ola , hola }
-void Language::Sufix(std::string input_file, std::string output_file) {
-  std::ifstream ifile(input_file);
-  std::ofstream ofile(output_file);
-  std::string aux;
 
-  while (ifile >> aux) { // Utilizar una lectura segura
-    Language Result;
-    Result.Add({{'&'}});
-    std::vector<Symbol> chain, chain_aux;
-    chain.push_back(aux[aux.size()-1]); // b
-    Result.Add(chain);
-    for(int i = aux.size() - 2; i >= 0; --i) {
-      chain.push_back(aux[i]); // ba, bab, babb, babba
-      for(int j = chain.size() - 1; j >= 0; --j) {
-        chain_aux.push_back(chain[j]); // ab, bab, bbab, abbab
-      }
-      Result.Add(chain_aux);
-      chain_aux.clear();
+/**
+ * @brief Obtenemos el sufijo de una cadena.
+ * 
+ * @param aux (cadena de la que vamos a sacar el sufijo)
+ * @return Language 
+ */
+Language Language::Sufix(std::string aux) {
+  Language Result;
+  Chain Aux;
+  std::vector<Symbol> chain, chain_aux;
+  std::string inversa = Aux.Inverse(aux);
+
+  Result.Add({{'&'}}); // Añadimos cadena vacia.
+  chain.push_back(inversa[0]);
+  Result.Add(chain); // Añadimos el primer simbolo de la cadena.
+
+  // Utilizamos un for para iterar entre los simbolos de la cadena
+  // y otro for para alternar el resultado obtenido ((ba) -> (ab)).
+  for (unsigned int i = 1; i < inversa.size(); ++i) {
+    chain.push_back(inversa[i]);
+    for (int j = chain.size() - 1; j >= 0; --j) {
+      chain_aux.push_back(chain[j]);
     }
-    ofile << Result << std::endl;
+    Result.Add(chain_aux);
+    chain_aux.clear();
   }
-  ifile.close();
-  ofile.close();
+  return Result;
 }

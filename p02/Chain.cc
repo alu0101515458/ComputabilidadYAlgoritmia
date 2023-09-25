@@ -3,39 +3,76 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 1: Contenedores asociativos
+// Practica 2: Operaciones con cadenas
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
 // Fecha: 19/09/2023
-// Archivo cya-P02-strings.cc: programa cliente.
-// Contiene la funcion main del proyecto que usa la clase Strings
-// para: 
-
-// Referencias:
-// Enlaces de interes
+// Archivo ClientChain.cc: programa cliente.
+// Contiene la funcion main del proyecto que usa las clases Alphabet, Symbol,
+// Chain y Language para: obtener alfabétos, longitudes de cadenas,
+// inversas de cadenas, prefijos de cadenas y sufijos de cadenas.
 
 // Historial de revisiones
-// 12/09/2023 - Creacion (primera version) del codigo
+// 19/09/2023 - Creacion (primera version) del codigo
+
 #include "Chain.h"
 
+/**
+ * @brief Constructor de la cadena.
+ * 
+ */
 Chain::Chain() {}
 
+/**
+ * @brief Constructor de la cadena a partir 
+ * de un vector de simbolos.
+ * 
+ * @param chain 
+ */
 Chain::Chain(std::vector<Symbol> chain) {
   chain_ = chain;
 }
 
+
+/**
+ * @brief Sobrecarga del operador< para comparar
+ * cadenas
+ * 
+ * @param first_chain 
+ * @param second_chain 
+ * @return true 
+ * @return false 
+ */
 bool operator<(const Chain& first_chain, const Chain& second_chain) {
   return (first_chain.chain_ < second_chain.chain_) ? true : false;
 }
 
+/**
+ * @brief Metodo para obtener los simbolos de la cadena.
+ * 
+ * @return std::vector<Symbol> 
+ */
 std::vector<Symbol> Chain::GetSymbols() const {
   return chain_;
 }
 
+/**
+ * @brief Metodo para obtener longitud de cadenas.
+ * 
+ * @return int 
+ */
 int Chain::GetSymbolsLength() const {
   return GetSymbols().size();
 }
 
+/**
+ * @brief Sobrecarga del operador<< para la correcta
+ * visualizacion de las cadenas.
+ * 
+ * @param os 
+ * @param chain 
+ * @return std::ostream& 
+ */
 std::ostream& operator<<(std::ostream& os, const Chain& chain) {
   for(const Symbol& symbol: chain.GetSymbols()) {
     os << symbol;
@@ -43,20 +80,22 @@ std::ostream& operator<<(std::ostream& os, const Chain& chain) {
   return os;
 }
 
+/**
+ * @brief Metodo para adicion de simbolos a cadenas.
+ * 
+ * @param Symbol 
+ */
 void Chain::Add(const Symbol& Symbol) {
   chain_.push_back(Symbol);
 }
 
-// abbab -> {a, b}
-// hola -> {a, h, l, o}
-void Chain::GetAlphabet(std::string input_file, std::string output_file) {
-  std::ifstream ifile(input_file);
-  std::ofstream ofile(output_file);
-  std::string aux;
-
-  // Declarar el alfabeto fuera del bucle
-
-  while (ifile >> aux) { // Utilizar una lectura segura
+/**
+ * @brief Metodo que devuelve un alfabeto a partir de una cadena.
+ * 
+ * @param aux 
+ * @return Alphabet 
+ */
+Alphabet Chain::GetAlphabet(std::string aux) {
     Alphabet Result;
     for (unsigned int i = 0; i < aux.length(); ++i) {
       Symbol symb = aux[i];
@@ -64,44 +103,33 @@ void Chain::GetAlphabet(std::string input_file, std::string output_file) {
         Result.Add(symb);
       }
     }
-    ofile << Result << std::endl;
-  }
-
-  // Cerrar los archivos
-  ifile.close();
-  ofile.close();
+  return Result;
 }
 
-void Chain::Inverse(std::string input_file, std::string output_file) {
-  std::ifstream ifile(input_file);
-  std::ofstream ofile(output_file);
-  std::string aux;
-
-  while(ifile >> aux) {
-    Chain Result;
-    for(int i = aux.length() - 1; i >= 0; --i) {
-      Result.Add(aux[i]);
-    }
-    ofile << Result << std::endl;
+/**
+ * @brief Metodo que devuelve la inversa de una cadena.
+ * 
+ * @param aux 
+ * @return std::string 
+ */
+std::string Chain::Inverse(std::string aux) {
+  std::string result;
+  for(int i = aux.size() - 1; i >= 0; --i) {
+    result.push_back(aux[i]);
   }
-  ifile.close();
-  ofile.close();
+  return result;
 }
 
-void Chain::Length(std::string input_file, std::string output_file) {
-  std::ifstream ifile(input_file);
-  std::ofstream ofile(output_file);
-  std::string aux;
+/**
+ * @brief Metodo que devuelve longitud de una cadena (string).
+ * 
+ * @param aux 
+ * @return int 
+ */
+int Chain::Length(std::string aux) {
   int count = 0;
-
-  while(ifile >> aux) {
-    for (unsigned int i = 0; i < aux.size(); ++i) {
-      ++count;
-    }
-    ofile << count << std::endl;
-    count = 0;
+  for (unsigned int i = 0; i < aux.size(); ++i) {
+    ++count;
   }
-
-  ifile.close();
-  ofile.close();
+  return count;
 }
