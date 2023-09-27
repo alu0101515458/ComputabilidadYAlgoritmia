@@ -41,6 +41,7 @@ void Tools::Usage(int argc, char* argv[]) {
     std::cout << " 3. INVERSA/S DE UNA/S CADENA/S" << std::endl;
     std::cout << " 4. PREFIJOS DE UNA/S CADENA/S" << std::endl;
     std::cout << " 5. SUFIJOS DE UNA/S CADENA/S" << std::endl;
+    exit(EXIT_SUCCESS);
   }
   if(argc != 4) {
     std::cout << "Modo de empleo: ./p02_strings filein.txt fileout.txt opcode" << std::endl;
