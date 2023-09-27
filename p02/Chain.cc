@@ -106,10 +106,10 @@ void Chain::Add(const Symbol& Symbol) {
  * @param aux 
  * @return int 
  */
-int Chain::Length(std::string aux) {
-  if(aux == "&") return 0; // Cadena vacia, su longitud = 0.
+int Chain::Length(Chain Chain) {
+  if(Chain.GetSymbols()[0] == '&') return 0; // Cadena vacia, su longitud = 0.
   int count = 0;
-  for (unsigned int i = 0; i < aux.size(); ++i) {
+  for (int i = 0; i < Chain.GetSymbolsLength(); ++i) {
     ++count;
   }
   return count;

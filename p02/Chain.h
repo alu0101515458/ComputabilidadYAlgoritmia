@@ -42,7 +42,7 @@ class Chain {
     // METODOS SOLVENTADORES
     Alphabet GetAlphabet(std::string aux);
     Chain Inverse(std::string aux);
-    int Length(std::string aux);
+    int Length(Chain Chain);
 
   private:
     std::vector<Symbol> chain_;

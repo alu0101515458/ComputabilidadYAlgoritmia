@@ -41,9 +41,9 @@ int main(int argc, char* argv[]) {
   case 1: // Longitud de cadena/s.
     {
       while (ifile >> aux) {
-        Chain Cadena;
+        Chain Cadena(aux);
         int result;
-        result = Cadena.Length(aux);
+        result = Cadena.Length(Cadena);
         ofile << result << std::endl;
       }
       break;
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     {
       while (ifile >> aux) {
         Language Lenguaje;
-        Lenguaje = Lenguaje.Sufix(aux);
+        Lenguaje = Lenguaje.Suffix(aux);
         ofile << Lenguaje << std::endl;
       }
       break;
