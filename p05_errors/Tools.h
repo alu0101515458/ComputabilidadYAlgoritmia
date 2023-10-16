@@ -15,8 +15,7 @@
 
 #pragma once
 
-#include <iostream>
-#include <fstream>
+#include<iostream>
 
 /**
  * @brief Namespace que tiene una funcion de uso. 

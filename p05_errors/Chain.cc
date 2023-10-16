@@ -73,7 +73,7 @@ std::vector<Symbol> Chain::GetSymbols() const {
  * @return int 
  */
 int Chain::GetSymbolsLength() const {
-  return chain_.size();
+  return GetSymbols().size();
 }
 
 /**

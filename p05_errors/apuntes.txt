@@ -1,0 +1,30 @@
+Clases:
+Símbolo, alfabeto, cadena, autómata finito, estados
+
+Simbolo
+- MODIFICAR ATRIBUTO A STRING EN VEZ DE CHAR
+- Simbolo('&') -> para usar epsilon en las epsilon-transiciones
+- Crear arriba del todo un "const Simbolo EMPTY('&');"
+
+Automata finito
+- Constructor por defecto
+- Add(Estado);
+- bool Simulate(cadena); -> METODO ESTRELLA
+- atributo -> std::set<Estados> automata_;, Estado& inicial_;
+
+Estados
+- Constructor(string, bool)
+- AddTransition(Estado, Simbolo)
+- AddEmptyTransition(Estado) (epsilon-&) -> PARA LAS EPSILON TRANSICIONES
+- bool accepted_ = false;
+- string identifier_;
+- std::multimap<Simbolo, const Estado&> transiciones_;
+- Getter/Setter IsAccepted(), GetterIdentifier();
+- operator< -> comparar los estados
+
+bool Simulate(const Chain& cadena) {
+  1. Empezar en el estado de arranque (q es var aux). (variable aux -> estado de arranque)
+  2. Para cada simbolo (s) de la cadena capturado con it...
+    2.1 Para cada transicion desde q con s...
+      2.2 Simulate
+}

@@ -21,42 +21,30 @@ FA::FA() {
   inicial_ = nullptr;
 }
 
-FA::FA(Alphabet alfabeto, std::set<State*> estados, State* inicial) {
-  alfabeto_ = alfabeto;
+FA::FA(std::set<State> estados, State* inicial) {
   estados_ = estados;
   inicial_ = inicial;
 }
 
-Alphabet FA::GetAlphabet() const {
-  return alfabeto_;
-}
-
-void FA::SetInitialState(State* estado) {
+void FA::setInitialState(State* estado) {
   inicial_ = estado;
-  estados_.insert(estado);
 }
 
 bool FA::Simulate_(const State* estado, const Chain& cadena, int pos) {
-  if (pos == cadena.GetSymbolsLength()) {
-    return true;
-  }
-
-  if (estado->GetTransitions().find(cadena.GetSymbols()[pos]) != estado->GetTransitions().end()) {
-    for (unsigned int i = 0; i < estado->FindSymbolTransitions(cadena.GetSymbols()[pos]).size(); ++i) {
-      if (Simulate_(estado->FindSymbolTransitions(cadena.GetSymbols()[pos])[i].second, cadena, pos+1)) {
-        return true;
-      }
+  if (pos == cadena.GetSymbolsLength()) return true;
+  else {
+    if (estado->FindTransition(cadena.GetSymbols()[pos]) != estado->GetTransitions().end()) {
+      return Simulate_(&estado->FindTransition(cadena.GetSymbols()[pos])->second, cadena, pos+1);
+    } else {
+      return false;
     }
   }
-
-  return false;
 }
 
-void FA::Add(State* estado) {
+void FA::Add(const State& estado) {
   estados_.insert(estado);
 }
 
-bool FA::Simulate(const Chain& cadena) {
-  int pos = 0;
-  return Simulate_(this->inicial_, cadena, pos);
+bool FA::Simulate(const Chain& cadena, int pos=0) {
+  return Simulate_(inicial_, cadena, pos);
 }

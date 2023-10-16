@@ -15,26 +15,29 @@
 // Historial de revisiones
 // 19/09/2023 - Creacion (primera version) del codigo
 
+#include "Symbol.h"
 #pragma once
 
-#include "State.h"
-#include "Chain.h"
-#include <set>
-
-class FA {
+/**
+ * @brief Clase Alfabeto que tiene que ver con la funcionalidad
+ * del programa.
+ * 
+ * @public Constructores, sobrecarga de operador<< y metodos.
+ * @private std::set<Symbol>
+ */
+class Alphabet {
   public:
-    FA();
-    FA(Alphabet, std::set<State*>, State*);
+    Alphabet();
+    Alphabet(const std::set<Symbol> alphabet);
 
-    Alphabet GetAlphabet() const;
-    void SetInitialState(State* estado);
-    void Add(State* estado);
-    bool Simulate(const Chain& cadena);
+    friend std::ostream& operator<<(std::ostream& os, const Alphabet& alphabet);
+
+    void Add(const Symbol& symbol);
+    std::set<Symbol> GetSymbols() const;
+    Alphabet NewAlphabet(Alphabet new_alphabet) const;
 
   private:
-    std::set<State*> estados_;
-    // Utilizamos un puntero para no generar una copia del estado inicial.
-    State* inicial_;
-    Alphabet alfabeto_;
-    bool Simulate_(const State*, const Chain&, int);
+    std::set<Symbol> alphabet_;
 };
+
+std::ostream& operator<<(std::ostream& os, const Alphabet& alphabet);

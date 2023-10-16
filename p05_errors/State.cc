@@ -22,11 +22,6 @@ State::State() {
   accepted_ = false;
 }
 
-State::State(std::string identifier) {
-  identifier_ = identifier;
-  accepted_ = this->IsAccepted();
-}
-
 State::State(const State& estado) {
   identifier_ = estado.identifier_;
   accepted_ = estado.accepted_;
@@ -45,35 +40,20 @@ bool State::IsAccepted() const {
   return accepted_;
 }
 
-std::vector<std::pair<Symbol, State*>> State::FindSymbolTransitions(const Symbol& simbolo) const {
-  std::pair<Symbol, State*> par;
-  std::vector<std::pair<Symbol, State*>> result;
-  for (auto it = transiciones_.begin(); it != transiciones_.end(); ++it) {
-    if (it->first == simbolo) {
-      par.first = it->first;
-      par.second = it->second;
-      result.push_back(par);
-    }
-  }
-  return result;
-}
-
-/*
-std::multimap<Symbol, State*>::const_iterator State::FindTransition(const Symbol& simbolo) const {
+const std::multimap<Symbol, State&>::iterator State::FindTransition(const Symbol& simbolo) const {
   return transiciones_.find(simbolo);
 }
-*/
 
-std::multimap<Symbol,State*> State::GetTransitions() const {
+std::multimap<Symbol,const State&> State::GetTransitions() const {
   return transiciones_;
 }
 
-void State::AddTransition(const Symbol& simbolo, State* estado) {
-  transiciones_.insert(std::pair<Symbol, State*>(simbolo, estado));
+void State::AddTransition(const Symbol& simbolo, const State& estado) {
+  transiciones_.insert(std::pair<Symbol, State>(simbolo, estado));
 }
 
-void State::AddEmptyTransition(State* estado) {
-  transiciones_.insert(std::pair<Symbol, State*>(EMPTY, estado));
+void State::AddEmptyTransition(const State& estado) {
+  transiciones_.insert(std::pair<Symbol, State>(EMPTY, estado));
 }
 
 bool operator<(const State& first_State, const State& second_State) {
@@ -85,20 +65,13 @@ std::ostream& operator<<(std::ostream& os, const State& estado) {
   if (estado.accepted_) {
     os << "|final|";
     for (auto it = estado.transiciones_.begin(); it != estado.transiciones_.end(); ++it) {
-      os << " -> " << it->first << " -> " << it->second->identifier_ << std::endl;
+      os << " -> " << it->first << " -> " << it->second.identifier_ << std::endl;
     }
   } else {
     os << "|no final|";
     for (auto it = estado.transiciones_.begin(); it != estado.transiciones_.end(); ++it) {
-      os << " -> " << it->first << " -> " << it->second->identifier_ << std::endl;
+      os << " -> " << it->first << " -> " << it->second.identifier_ << std::endl;
     }
   }
   return os;
-}
-
-std::istream& operator>>(std::istream& is, State*& state_ptr) {
-  std::string identifier;
-  is >> identifier;
-  state_ptr = new State(identifier);
-  return is;
 }

@@ -26,28 +26,24 @@ const Symbol EMPTY('&');
 class State {
   public:
     State();
-    State(std::string identifier);
     State(const State& estado);
     State(const std::string& nombre_estado, const bool& accepted);
 
     std::string GetIdentifier() const;
     bool IsAccepted() const;
 
-    void AddTransition(const Symbol& simbolo, State* estado);
-    void AddEmptyTransition(State* estado);
-    std::vector<std::pair<Symbol, State*>> FindSymbolTransitions(const Symbol& simbolo) const;
-    // std::multimap<Symbol, State*>::const_iterator FindTransition(const Symbol& simbolo) const;
-    std::multimap<Symbol, State*> GetTransitions() const;
+    void AddTransition(const Symbol& simbolo, const State& estado);
+    void AddEmptyTransition(const State& estado);
+    std::multimap<Symbol, State>::iterator FindTransition(const Symbol& simbolo) const;
+    std::multimap<Symbol, State> GetTransitions() const;
 
     friend bool operator<(const State& first_estado, const State& second_chain);
     friend std::ostream& operator<<(std::ostream& os, const State& State);
-    friend std::istream& operator>>(std::istream& is, State*& state_ptr);
   private:
     bool accepted_ = false;
     std::string identifier_;
-    std::multimap<Symbol, State*> transiciones_;
+    std::multimap<Symbol, State> transiciones_;
 };
 
 bool operator<(const State& first_estado, const State& second_estado);
 std::ostream& operator<<(std::ostream& os, const State& estado);
-std::istream& operator>>(std::istream& is, State*& state_ptr);

@@ -24,17 +24,15 @@
 class FA {
   public:
     FA();
-    FA(Alphabet, std::set<State*>, State*);
+    FA(std::set<State>, State*);
 
-    Alphabet GetAlphabet() const;
-    void SetInitialState(State* estado);
-    void Add(State* estado);
-    bool Simulate(const Chain& cadena);
+    void setInitialState(State* estado);
+    void Add(const State& estado);
+    bool Simulate(const Chain& cadena, int pos);
 
   private:
-    std::set<State*> estados_;
+    std::set<State> estados_;
     // Utilizamos un puntero para no generar una copia del estado inicial.
     State* inicial_;
-    Alphabet alfabeto_;
     bool Simulate_(const State*, const Chain&, int);
 };
