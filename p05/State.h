@@ -3,17 +3,14 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 2: Operaciones con cadenas
+// Practica 5: Implementacion de un simulador de automatas finitos
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 19/09/2023
-// Archivo ClientChain.cc: programa cliente.
-// Contiene la funcion main del proyecto que usa las clases Alphabet, Symbol,
-// Chain y Language para: obtener alfabétos, longitudes de cadenas,
-// inversas de cadenas, prefijos de cadenas y sufijos de cadenas.
+// Fecha: 10/10/2023
+// Archivo State.h: Clase State.
 
 // Historial de revisiones
-// 19/09/2023 - Creacion (primera version) del codigo
+// 10/10/2023 - Creacion (primera version) del codigo
 
 #pragma once
 #include "Symbol.h"
@@ -21,22 +18,31 @@
 #include <map>
 #include <utility> 
 
+// CONSTANTE QUE REPRESENTA EL SIMBOLO VACIO.
 const Symbol EMPTY('&');
 
+/**
+ * @brief Clase State que tiene que ver con la funcionalidad
+ * del programa.
+ * 
+ * @public Constructores, sobrecarga de operadores y metodos (getters, setters, ...).
+ * @private bool accepted_, std::string identifier_, std::multimap<Symbol, State*> transiciones_.
+ */
 class State {
   public:
     State();
     State(std::string identifier);
-    State(const State& estado);
     State(const std::string& nombre_estado, const bool& accepted);
 
     std::string GetIdentifier() const;
     bool IsAccepted() const;
 
+    void SetAccepted(bool accepted);
+
     void AddTransition(const Symbol& simbolo, State* estado);
     void AddEmptyTransition(State* estado);
-    std::vector<std::pair<Symbol, State*>> FindSymbolTransitions(const Symbol& simbolo) const;
-    // std::multimap<Symbol, State*>::const_iterator FindTransition(const Symbol& simbolo) const;
+    std::vector<State*> FindSymbolTransitions(const Symbol& simbolo) const;
+    std::vector<State*> FindEmptyTransitions() const;
     std::multimap<Symbol, State*> GetTransitions() const;
 
     friend bool operator<(const State& first_estado, const State& second_chain);

@@ -7,16 +7,20 @@
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
 // Fecha: 10/10/2023
-// Archivo Tools.h: Recursos para el correcto desarrollo del programa.
-// 
+// Archivo Tools.h: Namespace Tools.
 
 // Historial de revisiones
-// 19/09/2023 - Creacion (primera version) del codigo
+// 1/10/2023 - Creacion (primera version) del codigo
 
 #pragma once
 
+#include "Alphabet.h"
+#include "Symbol.h"
+#include "State.h"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <map>
 
 /**
  * @brief Namespace que tiene una funcion de uso. 
@@ -25,4 +29,6 @@
  */
 namespace Tools {
     void Usage(int argc, char* argv[]);
+    void ExistsSymbol(const Symbol& symbol, const Alphabet& alphabet);
+    void FreeMemory(std::map<std::string, State*>& states_vector);
 }

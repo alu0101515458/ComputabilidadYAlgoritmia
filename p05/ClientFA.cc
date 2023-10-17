@@ -7,8 +7,7 @@
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
 // Fecha: 10/10/2023
-// Archivo Tools.h: Recursos para el correcto desarrollo del programa.
-// 
+// Archivo ClientFA.cc: programa cliente.
 
 // Historial de revisiones
 // 10/10/2023 - Creacion (primera version) del codigo
@@ -16,6 +15,8 @@
 #include "Tools.h"
 #include "Alphabet.h"
 #include "FA.h"
+
+#include <map>
 
 /**
  * @brief Funcion principal donde se desarrolla
@@ -35,24 +36,31 @@ int main(int argc, char* argv[]) {
   std::string alphabet;
   std::getline(ifile, alphabet);
   // CREAMOS EL ALFABETO RECORRIENDO LOS SIMBOLOS ALMACENADOS EN LA VARIABLE (alphabet).
-  Alphabet alfabeto;
-  for (unsigned int i = 0; i < alphabet.size(); ++i) {
-    if (alphabet[i] != ' ' && alphabet[i] != '\n') {
-      alfabeto.Add(alphabet[i]);
-    }
-  }
+  Alphabet alfabeto(alphabet);
+  // CREAMOS EL AUTOMATA FINITO
+  FA automata(alfabeto);
   // RECOGEMOS EL NUMERO DE ESTADOS Y EL ESTADO INICIAL.
   int num_states;
   std::string initial_state;
   ifile >> num_states >> initial_state;
-  // RECOGEMOS LOS ESTADOS Y SUS TRANSICIONES.
-  std::set<State*> set_estados;
+  // CREAMOS UN MAP PARA RECOGER LOS ESTADOS Y SUS TRANSICIONES.
+  std::map<std::string, State*> states_vector;
+  // CREAMOS EL ESTADO INICIAL
+  states_vector[initial_state] = new State(initial_state);
+  
+  // MIENTRAS SIGAN HABIENDO ESTADOS
   while (num_states != 0) {
     std::string nombre;
     bool accepted;
     ifile >> nombre >> accepted;
     // CREAMOS EL ESTADO CON SU NOMBRE Y SI ES DE ACEPTACION O NO.
-    State* estado = new State(nombre, accepted);
+    // SI NO EXISTE EL ESTADO, LO CREAMOS EN EL MAP CON SU NOMBRE Y SI ES DE ACEPTACION O NO.
+    if (states_vector.find(nombre) == states_vector.end()) {
+      states_vector[nombre] = new State(nombre, accepted);
+    } else { // SI EXISTE, ACTUALIZAMOS SI ES DE ACEPTACION O NO.
+      states_vector[nombre]->SetAccepted(accepted);
+    }
+    // RECOGEMOS EL NUMERO DE TRANSICIONES DEL ESTADO.
     int transiciones;
     ifile >> transiciones;
     // PARA CADA TRANSICION DEL ESTADO, RECOGEMOS EL SIMBOLO Y EL ESTADO AL QUE VA.
@@ -61,60 +69,40 @@ int main(int argc, char* argv[]) {
       ifile >> symbol;
       Symbol simbolo(symbol);
       // COMPROBAMOS QUE EL SIMBOLO PERTENECE AL ALFABETO DEL AUTOMATA FINITO
-      bool exist = false;
-      for (unsigned int j = 0; j < alfabeto.GetSymbols().size(); ++j) {
-        if (alfabeto.GetSymbols().find(simbolo) != alfabeto.GetSymbols().end()) {
-          exist = true;
-        }
+      Tools::ExistsSymbol(simbolo, alfabeto);
+      // AÑADIMOS LA TRANSICION AL ESTADO RECOGIENDO EL NOMBRE DEL ESTADO AL QUE VA.
+      std::string nombreEstado2;
+      ifile >> nombreEstado2;
+      // SI NO EXISTE EL ESTADO, LO CREAMOS EN EL MAP CON SU NOMBRE.
+      if (states_vector.find(nombreEstado2) == states_vector.end()) {
+        states_vector[nombreEstado2] = new State(nombreEstado2);
       }
-      if (!exist) {
-        std::cout << "El simbolo " << simbolo << " no pertenece al alfabeto del automata finito." << std::endl;
-        exit(EXIT_FAILURE);
+      // SI ES UN SIMBOLO VACIO, AÑADIMOS UNA TRANSICION VACIA.
+      if (simbolo == EMPTY) {
+        states_vector[nombre]->AddEmptyTransition(states_vector[nombreEstado2]);
+      } else { // SI NO ES UN SIMBOLO VACIO, AÑADIMOS UNA TRANSICION CON EL SIMBOLO.
+        states_vector[nombre]->AddTransition(simbolo, states_vector[nombreEstado2]);
       }
-      // AÑADIMOS LA TRANSICION AL ESTADO
-      State* estado2;
-      ifile >> estado2;
-      estado->AddTransition(simbolo, estado2);
-      delete estado2;
     }
-    set_estados.insert(estado);
-    delete estado;
+    // AÑADIMOS EL ESTADO CON SUS TRANSICIONES AL AUTOMATA FINITO.
+    automata.Add(states_vector[nombre]);
     --num_states;
   }
-  // COMPROBAMOS QUE EL ESTADO INICIAL PERTENECE AL CONJUNTO DE ESTADOS DEL AUTOMATA FINITO
-  bool exist = false;
-  for (auto it = set_estados.begin(); it != set_estados.end(); ++it) {
-    if ((*it)->GetIdentifier() == initial_state) {
-      exist = true;
-    }
-  }
-  if (!exist) {
-    std::cout << "El estado inicial " << initial_state << " no pertenece al conjunto de estados del automata finito." << std::endl;
-    exit(EXIT_FAILURE);
-  }
-  // CREAMOS EL AUTOMATA FINITO
-  State* estado_inicial = new State(initial_state);
-  FA automata(alfabeto, set_estados, estado_inicial);
+  // ESTABLECEMOS EL ESTADO INICIAL DEL AUTOMATA FINITO.
+  automata.SetInitialState(states_vector[initial_state]);
   // RECOGEMOS LAS CADENAS Y LAS COMPROBAMOS
   std::ifstream input_chains{argv[2]};
   std::string cadena;
-
   while (input_chains >> cadena) {
     // CONVERSION DE STRING A CHAIN
     Chain chain{cadena};
     // COMPROBACION DE LA CHAIN
-    std::cout << "Cadena " << chain << (automata.Simulate(chain) ? " aceptada." : " no aceptada.") << std::endl;
+    std::cout << chain << " --- " << (automata.Simulate(chain) ? "Accepted" : "Rejected") << std::endl;
   }
-  delete estado_inicial;
+  // CERRAMOS LOS FICHEROS.
   ifile.close();
   input_chains.close();
+  // LIBERAMOS LA MEMORIA.
+  Tools::FreeMemory(states_vector);
   return 0;
 }
-
-/*
-  FA automata;
-
-  // Mejor asi para todos los estados que crees!!
-  // Así no dependen del scope y se pueden usar sus punteros con tranquilidad
-  State* initialState = new State("q1", false);
-  */

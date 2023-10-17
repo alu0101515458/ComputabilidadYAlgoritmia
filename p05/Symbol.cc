@@ -3,17 +3,14 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 2: Operaciones con cadenas
+// Practica 5: Implementacion de un simulador de automatas finitos
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 19/09/2023
-// Archivo ClientChain.cc: programa cliente.
-// Contiene la funcion main del proyecto que usa las clases Alphabet, Symbol,
-// Chain y Language para: obtener alfabétos, longitudes de cadenas,
-// inversas de cadenas, prefijos de cadenas y sufijos de cadenas.
+// Fecha: 10/10/2023
+// Archivo Symbol.cc: Implementacion de la clase Symbol.
 
 // Historial de revisiones
-// 19/09/2023 - Creacion (primera version) del codigo
+// 10/10/2023 - Creacion (primera version) del codigo
 
 #include "Symbol.h"
 
@@ -64,7 +61,7 @@ std::ostream& operator<<(std::ostream& os, const Symbol& symbol) {
  * @return false 
  */
 bool operator==(const Symbol& first_symbol, const Symbol& second_symbol) {
-  return (first_symbol.GetSymbol() == second_symbol.GetSymbol()) ? true : false;
+  return (first_symbol.GetSymbol() == second_symbol.GetSymbol());
 }
 
 /**
@@ -78,4 +75,17 @@ bool operator==(const Symbol& first_symbol, const Symbol& second_symbol) {
  */
 bool operator<(const Symbol& first_symbol, const Symbol& second_symbol) {
   return (first_symbol.GetSymbol() < second_symbol.GetSymbol()) ? true : false;
+}
+
+/**
+ * @brief Sobrecarga del operador!= para comparar
+ * simbolos.
+ * 
+ * @param first_symbol 
+ * @param second_symbol 
+ * @return true 
+ * @return false 
+ */
+bool operator!=(const Symbol& first_symbol, const Symbol& second_symbol) {
+  return (first_symbol.GetSymbol() != second_symbol.GetSymbol()) ? true : false;
 }

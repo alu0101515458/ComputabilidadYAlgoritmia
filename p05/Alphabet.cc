@@ -3,17 +3,14 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 2: Operaciones con cadenas
+// Practica 5: Implementacion de un simulador de automatas finitos
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 19/09/2023
-// Archivo ClientChain.cc: programa cliente.
-// Contiene la funcion main del proyecto que usa las clases Alphabet, Symbol,
-// Chain y Language para: obtener alfabétos, longitudes de cadenas,
-// inversas de cadenas, prefijos de cadenas y sufijos de cadenas.
+// Fecha: 10/10/2023
+// Archivo Alphabet.cc: Implementacion de la clase Alfabeto.
 
 // Historial de revisiones
-// 19/09/2023 - Creacion (primera version) del codigo
+// 10/10/2023 - Creacion (primera version) del codigo
 
 #include "Alphabet.h"
 
@@ -22,6 +19,19 @@
  * 
  */
 Alphabet::Alphabet() {}
+
+/**
+ * @brief Constructor del alfabeto a partir de una cadena string.
+ * 
+ * @param alphabet 
+ */
+Alphabet::Alphabet(std::string alphabet) {
+  for (unsigned int i = 0; i < alphabet.size(); ++i) {
+    if (alphabet[i] != ' ' && alphabet[i] != '\n') {
+      alphabet_.insert(alphabet[i]);
+    }
+  }
+}
 
 /**
  * @brief Constructor del alfabeto a partir de un set de simbolos.
@@ -41,8 +51,8 @@ Alphabet::Alphabet(const std::set<Symbol> alphabet) {
  * @return std::ostream& 
  */
 std::ostream& operator<<(std::ostream& os, const Alphabet& alphabet) {
-  std::set<Symbol>::iterator it = alphabet.alphabet_.begin();
   os << "{";
+  std::set<Symbol>::iterator it = alphabet.alphabet_.begin();
   if (it != alphabet.alphabet_.end()) {
     os << *it;
     ++it;
