@@ -41,19 +41,15 @@ Chain::Chain(std::vector<Symbol> chain) {
   chain_ = chain;
 }
 
-
 /**
- * @brief Sobrecarga del operador< para comparar
- * cadenas
+ * @brief Metodo para adicion de simbolos a cadenas.
  * 
- * @param first_chain 
- * @param second_chain 
- * @return true 
- * @return false 
+ * @param Symbol 
  */
-bool operator<(const Chain& first_chain, const Chain& second_chain) {
-  return (first_chain.chain_ < second_chain.chain_) ? true : false;
+void Chain::Add(const Symbol& Symbol) {
+  chain_.push_back(Symbol);
 }
+
 
 /**
  * @brief Metodo para obtener los simbolos de la cadena.
@@ -74,27 +70,35 @@ int Chain::GetSymbolsLength() const {
 }
 
 /**
- * @brief Sobrecarga del operador<< para la correcta
- * visualizacion de las cadenas.
+ * @brief Metodo que devuelve un alfabeto a partir de una cadena.
  * 
- * @param os 
- * @param chain 
- * @return std::ostream& 
+ * @param aux 
+ * @return Alphabet 
  */
-std::ostream& operator<<(std::ostream& os, const Chain& chain) {
-  for(const Symbol& symbol: chain.GetSymbols()) {
-    os << symbol;
-  }
-  return os;
+Alphabet Chain::GetAlphabet(std::string aux) {
+    Alphabet Result;
+    for (unsigned int i = 0; i < aux.length(); ++i) {
+      Symbol symb = aux[i];
+      if (Result.GetSymbols().find(symb) != Result.GetSymbols().end()) {
+        Result.Add(symb);
+      }
+    }
+  return Result;
 }
 
+
 /**
- * @brief Metodo para adicion de simbolos a cadenas.
+ * @brief Metodo que devuelve la inversa de una cadena.
  * 
- * @param Symbol 
+ * @param aux 
+ * @return Chain
  */
-void Chain::Add(const Symbol& Symbol) {
-  chain_.push_back(Symbol);
+Chain Chain::Inverse(std::string aux) {
+  Chain Result;
+  for(int i = aux.size() - 1; i >= 0; --i) {
+    Result.Add(aux[i]);
+  }
+  return Result;
 }
 
 /**
@@ -113,32 +117,29 @@ int Chain::Length(Chain Chain) {
 }
 
 /**
- * @brief Metodo que devuelve un alfabeto a partir de una cadena.
+ * @brief Sobrecarga del operador< para comparar
+ * cadenas
  * 
- * @param aux 
- * @return Alphabet 
+ * @param first_chain 
+ * @param second_chain 
+ * @return true 
+ * @return false 
  */
-Alphabet Chain::GetAlphabet(std::string aux) {
-    Alphabet Result;
-    for (unsigned int i = 0; i < aux.length(); ++i) {
-      Symbol symb = aux[i];
-      if (Result.GetSymbols().find(symb) != Result.GetSymbols().end()) {
-        Result.Add(symb);
-      }
-    }
-  return Result;
+bool operator<(const Chain& first_chain, const Chain& second_chain) {
+  return (first_chain.chain_ < second_chain.chain_) ? true : false;
 }
 
 /**
- * @brief Metodo que devuelve la inversa de una cadena.
+ * @brief Sobrecarga del operador<< para la correcta
+ * visualizacion de las cadenas.
  * 
- * @param aux 
- * @return Chain
+ * @param os 
+ * @param chain 
+ * @return std::ostream& 
  */
-Chain Chain::Inverse(std::string aux) {
-  Chain Result;
-  for(int i = aux.size() - 1; i >= 0; --i) {
-    Result.Add(aux[i]);
+std::ostream& operator<<(std::ostream& os, const Chain& chain) {
+  for(const Symbol& symbol: chain.GetSymbols()) {
+    os << symbol;
   }
-  return Result;
+  return os;
 }

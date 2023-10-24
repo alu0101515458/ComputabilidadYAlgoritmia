@@ -43,21 +43,6 @@ Alphabet::Alphabet(const std::set<Symbol> alphabet) {
 }
 
 /**
- * @brief Sobrecarga del operador<< para la correcta
- * visualizacion de alfabetos.
- * 
- * @param os 
- * @param alphabet 
- * @return std::ostream& 
- */
-std::ostream& operator<<(std::ostream& os, const Alphabet& alphabet) {
-  for (auto it = alphabet.alphabet_.begin(); it != alphabet.alphabet_.end(); ++it) {
-    os << *it << " ";
-  }
-  return os;
-}
-
-/**
  * @brief Metodo que devuelve los simbolos.
  * 
  * @return std::set<Symbol> 
@@ -87,4 +72,20 @@ Alphabet Alphabet::NewAlphabet(Alphabet alphabet) const {
     new_alphabet.Add(symbol);
   }
   return new_alphabet;
+}
+
+
+/**
+ * @brief Sobrecarga del operador<< para la correcta
+ * visualizacion de alfabetos.
+ * 
+ * @param os 
+ * @param alphabet 
+ * @return std::ostream& 
+ */
+std::ostream& operator<<(std::ostream& os, const Alphabet& alphabet) {
+  for (auto it = alphabet.alphabet_.begin(); it != alphabet.alphabet_.end(); ++it) {
+    os << *it << " ";
+  }
+  return os;
 }

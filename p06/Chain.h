@@ -28,18 +28,18 @@ class Chain {
     Chain();
     Chain(std::string chain);
     Chain(std::vector<Symbol> chain);
-
-    friend bool operator<(const Chain& first_chain, const Chain& second_chain);
-    friend std::ostream& operator<<(std::ostream& os, const Chain& chain);
     
     void Add(const Symbol& Symbol);
     std::vector<Symbol> GetSymbols() const;
     int GetSymbolsLength() const;
-
+    
     // METODOS SOLVENTADORES
     Alphabet GetAlphabet(std::string aux);
     Chain Inverse(std::string aux);
     int Length(Chain Chain);
+
+    friend bool operator<(const Chain& first_chain, const Chain& second_chain);
+    friend std::ostream& operator<<(std::ostream& os, const Chain& chain);
 
   private:
     std::vector<Symbol> chain_;

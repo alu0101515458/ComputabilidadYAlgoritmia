@@ -28,11 +28,11 @@ class Alphabet {
     Alphabet(std::string alphabet);
     Alphabet(const std::set<Symbol> alphabet);
 
-    friend std::ostream& operator<<(std::ostream& os, const Alphabet& alphabet);
-
     void Add(const Symbol& symbol);
     std::set<Symbol> GetSymbols() const;
     Alphabet NewAlphabet(Alphabet new_alphabet) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Alphabet& alphabet);
 
   private:
     std::set<Symbol> alphabet_;
