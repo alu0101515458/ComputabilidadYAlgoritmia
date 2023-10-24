@@ -1,0 +1,12 @@
+CLASES: Alphabet, Symbol, chain, FA, State
+
+input.nfa -> output.dfa
+
+FA
+operator<<
+ofile << automata.toDFA();
+
+toDFA
+std::vector<std::pair<std::vector<State*>, State*>> -> {q0, q1, q2} = A
+metodo para comprobar si existe el vector del par
+metodo para recoger el puntero del par
