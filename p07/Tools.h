@@ -3,22 +3,25 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 6: Algoritmo de construcción de subconjuntos
+// Practica 7: Gramáticas en Forma Normal de Chomsky.
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 24/10/2023
+// Fecha: 30/10/2023
 // Archivo Tools.h: Namespace Tools.
 
 // Historial de revisiones
-// 1/10/2023 - Creacion (primera version) del codigo
+// 24/10/2023 - Creacion (primera version) del codigo
 
 #pragma once
 
 #include <iostream>
 
 /**
- * @brief Namespace que tiene una funcion de uso. 
- * Utilizacion de namespace para ahorrar memoria creando objetos.
+ * @brief NAMESPACE QUE CONTIENE UN METODO PARA MOSTRAR
+ * LA FORMA CORRECTA DE USAR EL PROGRAMA.
+ * UTILIZADO EN EL MAIN.
+ * UTILIZAMOS NAMESPACE PARA NO TENER QUE CREAR UNA CLASE
+ * Y AHORRAR MEMORIA.
  * 
  */
 namespace Tools {

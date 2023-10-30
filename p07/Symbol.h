@@ -3,14 +3,14 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 6: Algoritmo de construcción de subconjuntos
+// Practica 7: Gramáticas en Forma Normal de Chomsky.
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 24/10/2023
+// Fecha: 30/10/2023
 // Archivo Symbol.h: Clase Symbol.
 
 // Historial de revisiones
-// 10/10/2023 - Creacion (primera version) del codigo
+// 24/10/2023 - Creacion (primera version) del codigo
 
 #pragma once
 
@@ -29,16 +29,20 @@
  */
 class Symbol {
   public:
+    // CONSTRUCTORES
     Symbol();
     Symbol(char symbol);
 
+    // GETTERS
+    char GetSymbol() const;
+
+    // SOBRECARGA DE OPERADORES
     friend std::ostream& operator<<(std::ostream& os, const Symbol& symbol);
     friend bool operator==(const Symbol& first_symbol, const Symbol& second_symbol);
     friend bool operator<(const Symbol& first_symbol, const Symbol& second_symbol);
     friend bool operator!=(const Symbol& first_symbol, const Symbol& second_symbol);
     friend std::ifstream& operator>>(std::ifstream& is, Symbol& symbol);
 
-    char GetSymbol() const;
 
   private:
     char char_;

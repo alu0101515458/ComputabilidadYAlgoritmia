@@ -3,25 +3,25 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 6: Algoritmo de construcción de subconjuntos
+// Practica 7: Gramáticas en Forma Normal de Chomsky.
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 24/10/2023
+// Fecha: 30/10/2023
 // Archivo Alphabet.cc: Implementacion de la clase Alfabeto.
 
 // Historial de revisiones
-// 10/10/2023 - Creacion (primera version) del codigo
+// 24/10/2023 - Creacion (primera version) del codigo
 
 #include "Alphabet.h"
 
 /**
- * @brief Constructor del alfabeto.
+ * @brief CONSTRUCTOR POR DEFECTO DEL ALFABETO.
  * 
  */
 Alphabet::Alphabet() {}
 
 /**
- * @brief Constructor del alfabeto a partir de una cadena string.
+ * @brief CONSTRUCTOR DEL ALFABETO A PARTIR DE UN STRING.
  * 
  * @param alphabet 
  */
@@ -34,7 +34,7 @@ Alphabet::Alphabet(std::string alphabet) {
 }
 
 /**
- * @brief Constructor del alfabeto a partir de un set de simbolos.
+ * @brief CONSTRUCTOR DEL ALFABETO A PARTIR DE UN CONJUNTO DE SÍMBOLOS.
  * 
  * @param alphabet 
  */
@@ -43,16 +43,7 @@ Alphabet::Alphabet(const std::set<Symbol> alphabet) {
 }
 
 /**
- * @brief Metodo que devuelve los simbolos.
- * 
- * @return std::set<Symbol> 
- */
-std::set<Symbol> Alphabet::GetSymbols() const {
-  return this->alphabet_;
-}
-
-/**
- * @brief Metodo de adicion de simbolos a alfabetos.
+ * @brief MÉTODO DE ADICIÓN DE UN SÍMBOLO AL ALFABETO.
  * 
  * @param symbol 
  */
@@ -61,18 +52,15 @@ void Alphabet::Add(const Symbol& symbol) {
 }
 
 /**
- * @brief Metodo que devuelve la union de dos alfabetos.
+ * @brief MÉTODO QUE DEVUELVE LOS SÍMBOLOS DEL ALFABETO.
  * 
- * @param alphabet 
- * @return Alphabet 
+ * @return std::set<Symbol> 
  */
-Alphabet Alphabet::NewAlphabet(Alphabet alphabet) const {
-  Alphabet new_alphabet;
-  for (const Symbol& symbol: alphabet.GetSymbols()) {
-    new_alphabet.Add(symbol);
-  }
-  return new_alphabet;
+std::set<Symbol> Alphabet::GetSymbols() const {
+  return this->alphabet_;
 }
+
+
 
 /**
  * @brief MÉTODO QUE DEVUELVE TRUE SI ENCUENTRA 
@@ -91,10 +79,22 @@ bool Alphabet::FindSymbol(const Symbol& symbol) const {
   return false;
 }
 
+/**
+ * @brief MÉTODO QUE DEVUELVE LA UNION DE DOS ALFABETOS.
+ * 
+ * @param alphabet 
+ * @return Alphabet 
+ */
+Alphabet Alphabet::NewAlphabet(Alphabet alphabet) const {
+  Alphabet new_alphabet;
+  for (const Symbol& symbol: alphabet.GetSymbols()) {
+    new_alphabet.Add(symbol);
+  }
+  return new_alphabet;
+}
 
 /**
- * @brief Sobrecarga del operador<< para la correcta
- * visualizacion de alfabetos.
+ * @brief SOBRECARCA DEL OPERADOR << PARA IMPRIMIR EL ALFABETO.
  * 
  * @param os 
  * @param alphabet 

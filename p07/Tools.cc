@@ -3,19 +3,19 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 6: Algoritmo de construcción de subconjuntos
+// Practica 7: Gramáticas en Forma Normal de Chomsky.
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 24/10/2023
+// Fecha: 30/10/2023
 // Archivo Tools.cc: Implementacion del namespace Tools.
 
 // Historial de revisiones
-// 1/10/2023 - Creacion (primera version) del codigo
+// 24/10/2023 - Creacion (primera version) del codigo
 
 #include "Tools.h"
 
 /**
- * @brief En el main incluimos esta función para aclarar la utilización del programa.
+ * @brief MÉTODO QUE ESPECIFICA EL MODO DE EMPLEO DEL PROGRAMA.
  * 
  * @param argc 
  * @param argv 

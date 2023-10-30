@@ -3,14 +3,14 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 6: Algoritmo de construcción de subconjuntos
+// Practica 7: Gramáticas en Forma Normal de Chomsky.
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 24/10/2023
-// Archivo Symbol.h: Clase Symbol.
+// Fecha: 30/10/2023
+// Archivo Grammar2CNF.cc: Implementación del main.
 
 // Historial de revisiones
-// 10/10/2023 - Creacion (primera version) del codigo
+// 24/10/2023 - Creacion (primera version) del codigo
 
 #include "Tools.h"
 #include "Grammar.h"

@@ -1,15 +1,70 @@
+// Universidad de La Laguna
+// Escuela Superior de Ingenierıa y Tecnologıa
+// Grado en Ingenierıa Informatica
+// Asignatura: Computabilidad y Algoritmia
+// Curso: 2º
+// Practica 7: Gramáticas en Forma Normal de Chomsky.
+// Autor: Tomas Javes Tommasone
+// Correo: alu0101515458@ull.edu.es
+// Fecha: 30/10/2023
+// Archivo Grammar.cc: Implementación de la clase Grammar.
+
+// Historial de revisiones
+// 24/10/2023 - Creacion (primera version) del codigo
+
 #include "Grammar.h"
 
+/**
+ * @brief CONSTRUCTOR POR DEFECTO DE LA GRAMÁTICA.
+ * 
+ */
 Grammar::Grammar() {
   alphabet_ = Alphabet();
   non_terminals_ = std::set<Symbol>();
   productions_ = std::multimap<Symbol, std::vector<Symbol>>();
 }
 
-void Grammar::AddProduction(const Symbol& non_terminal, const std::vector<Symbol>& chain) {
-  productions_.insert(std::pair<Symbol, std::vector<Symbol>>(non_terminal, chain));
+/**
+ * @brief GETTER QUE DEVUELVE EL ALFABETO DE LA GRAMÁTICA.
+ * 
+ * @return Alphabet 
+ */
+Alphabet Grammar::GetAlphabet() const {
+  return alphabet_;
 }
 
+/**
+ * @brief GETTER QUE DEVUELVE LOS SÍMBOLOS NO TERMINALES DE LA GRAMÁTICA.
+ * 
+ * @return std::set<Symbol> 
+ */
+std::set<Symbol> Grammar::GetSimbolsNonTerminal() const {
+  return non_terminals_;
+}
+
+/**
+ * @brief SETTER QUE ESTABLECE EL ALFABETO DE LA GRAMÁTICA.
+ * 
+ * @param alphabet 
+ */
+void Grammar::SetAlphabet(Alphabet alphabet) {
+  alphabet_ = alphabet;
+}
+
+/**
+ * @brief SETTER QUE ESTABLECE LOS SÍMBOLOS NO TERMINALES DE LA GRAMÁTICA.
+ * 
+ * @param non_terminals 
+ */
+void Grammar::SetSimbolsNonTerminal(std::set<Symbol> non_terminals) {
+  non_terminals_ = non_terminals;
+}
+
+/**
+ * @brief MÉTODO QUE DEVUELVE LAS PRODUCCIONES VACÍAS DE LA GRAMÁTICA.
+ * 
+ * @return std::multimap<Symbol, std::vector<Symbol>> 
+ */
 std::multimap<Symbol, std::vector<Symbol>> Grammar::FindEmptyProductions() {
   std::multimap<Symbol, std::vector<Symbol>> empty_productions;
   for (auto production : productions_) {
@@ -20,6 +75,11 @@ std::multimap<Symbol, std::vector<Symbol>> Grammar::FindEmptyProductions() {
   return empty_productions;
 }
 
+/**
+ * @brief MÉTODO QUE DEVUELVE LAS PRODUCCIONES UNITARIAS DE LA GRAMÁTICA.
+ * 
+ * @return std::multimap<Symbol, std::vector<Symbol>> 
+ */
 std::multimap<Symbol, std::vector<Symbol>> Grammar::FindUnitaryProductions() {
   std::multimap<Symbol, std::vector<Symbol>> unitary_productions;
   for (auto production : productions_) {
@@ -30,6 +90,21 @@ std::multimap<Symbol, std::vector<Symbol>> Grammar::FindUnitaryProductions() {
   return unitary_productions;
 }
 
+/**
+ * @brief MÉTODO QUE AÑADE UNA PRODUCCIÓN A LA GRAMÁTICA.
+ * 
+ * @param non_terminal 
+ * @param chain 
+ */
+void Grammar::AddProduction(const Symbol& non_terminal, const std::vector<Symbol>& chain) {
+  productions_.insert(std::pair<Symbol, std::vector<Symbol>>(non_terminal, chain));
+}
+
+/**
+ * @brief MÉTODO QUE DEVUELVE LA GRAMÁTICA EN FORMA NORMAL DE CHOMSKY.
+ * 
+ * @return Grammar 
+ */
 Grammar Grammar::CFGtoFNC() const {
   Grammar grammar(*this);
   char c = 'A';
@@ -78,22 +153,13 @@ Grammar Grammar::CFGtoFNC() const {
   return grammar;
 }
 
-Alphabet Grammar::GetAlphabet() const {
-  return alphabet_;
-}
-
-std::set<Symbol> Grammar::GetSimbolNonTerminal() const {
-  return non_terminals_;
-}
-
-void Grammar::SetAlphabet(Alphabet alphabet) {
-  alphabet_ = alphabet;
-}
-
-void Grammar::SetSimbolsNonTerminal(std::set<Symbol> non_terminals) {
-  non_terminals_ = non_terminals;
-}
-
+/**
+ * @brief SOBRERACARGA DEL OPERADOR << PARA LA GRAMÁTICA.
+ * 
+ * @param os 
+ * @param grammar 
+ * @return std::ostream& 
+ */
 std::ostream& operator<<(std::ostream& os, const Grammar& grammar) {
   os << grammar.alphabet_.GetSymbols().size() << std::endl;
   for (auto symbol : grammar.alphabet_.GetSymbols()) {

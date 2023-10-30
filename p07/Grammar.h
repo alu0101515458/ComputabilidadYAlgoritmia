@@ -3,14 +3,14 @@
 // Grado en Ingenierıa Informatica
 // Asignatura: Computabilidad y Algoritmia
 // Curso: 2º
-// Practica 6: Algoritmo de construcción de subconjuntos
+// Practica 7: Gramáticas en Forma Normal de Chomsky.
 // Autor: Tomas Javes Tommasone
 // Correo: alu0101515458@ull.edu.es
-// Fecha: 24/10/2023
-// Archivo Symbol.h: Clase Symbol.
+// Fecha: 30/10/2023
+// Archivo Grammar.h: Clase Grammar.
 
 // Historial de revisiones
-// 10/10/2023 - Creacion (primera version) del codigo
+// 24/10/2023 - Creacion (primera version) del codigo
 
 #pragma once
 
@@ -20,24 +20,33 @@
 #include<map>
 #include<iostream>
 
+/**
+ * @brief Clase Grammar que tiene que ver con la funcionalidad
+ * del programa
+ * 
+ * @public Constructores, getters, setters, métodos
+ * y sobrecarga del operador<<.
+ * @private std::set<Symbol>, Alphabet,
+ * std::multimap<Symbol, std::vector<Symbol>>
+ */
 class Grammar {
   public:
     // CONSTRUCTORES
     Grammar();
 
-    // MÉTODOS
-    Grammar CFGtoFNC() const;
-    void AddProduction(const Symbol& non_terminal, const std::vector<Symbol>& chain);
-    std::multimap<Symbol, std::vector<Symbol>> FindEmptyProductions();
-    std::multimap<Symbol, std::vector<Symbol>> FindUnitaryProductions();
-
     // GETTERS
     Alphabet GetAlphabet() const;
-    std::set<Symbol> GetSimbolNonTerminal() const;
+    std::set<Symbol> GetSimbolsNonTerminal() const;
 
     // SETTERS
     void SetAlphabet(Alphabet alphabet);
     void SetSimbolsNonTerminal(std::set<Symbol> non_terminals);
+
+    // MÉTODOS
+    std::multimap<Symbol, std::vector<Symbol>> FindEmptyProductions();
+    std::multimap<Symbol, std::vector<Symbol>> FindUnitaryProductions();
+    void AddProduction(const Symbol& non_terminal, const std::vector<Symbol>& chain);
+    Grammar CFGtoFNC() const;
 
     // SOBRECARGA DE OPERADORES
     friend std::ostream& operator<<(std::ostream& os, const Grammar& grammar);
