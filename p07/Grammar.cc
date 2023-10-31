@@ -66,8 +66,11 @@ void Grammar::SetSimbolsNonTerminal(std::set<Symbol> non_terminals) {
  * @return std::multimap<Symbol, std::vector<Symbol>> 
  */
 std::multimap<Symbol, std::vector<Symbol>> Grammar::FindEmptyProductions() {
+  // MULTIMAP DE PRODUCCIONES VACÍAS.
   std::multimap<Symbol, std::vector<Symbol>> empty_productions;
+  // PARA CADA PRODUCCIÓN DE LA GRAMÁTICA.
   for (auto production : productions_) {
+    // SI LA CADENA DE LA PRODUCCIÓN TIENE TAMAÑO 0, AÑADIMOS LA PRODUCCIÓN AL MULTIMAP.
     if (production.second.size() == 0) {
       empty_productions.insert(production);
     }
@@ -81,8 +84,11 @@ std::multimap<Symbol, std::vector<Symbol>> Grammar::FindEmptyProductions() {
  * @return std::multimap<Symbol, std::vector<Symbol>> 
  */
 std::multimap<Symbol, std::vector<Symbol>> Grammar::FindUnitaryProductions() {
+  // MULTIMAP DE PRODUCCIONES UNITARIAS.
   std::multimap<Symbol, std::vector<Symbol>> unitary_productions;
+  // PARA CADA PRODUCCIÓN DE LA GRAMÁTICA.
   for (auto production : productions_) {
+    // SI LA CADENA DE LA PRODUCCIÓN TIENE TAMAÑO 1 Y EL SÍMBOLO ES NO TERMINAL, AÑADIMOS LA PRODUCCIÓN AL MULTIMAP.
     if (production.second.size() == 1 && non_terminals_.find(production.second[0]) != non_terminals_.end()) {
       unitary_productions.insert(production);
     }
@@ -107,45 +113,64 @@ void Grammar::AddProduction(const Symbol& non_terminal, const std::vector<Symbol
  */
 Grammar Grammar::CFGtoFNC() const {
   Grammar grammar(*this);
+  // UTILIZAREMOS UN CHAR PARA CREAR LOS SÍMBOLOS AUXILIARES.
   char c = 'A';
-  // CON MAPA_AUX VERIFICAMOS QUE EXISTE UN SÍMBOLO Y NO HAY NECESIDAD DE CREAR MÁS QUE GENEREN EL MISMO SÍMBOLO.
+  // CON MAPA_AUX_1 VERIFICAMOS SI EXISTE UN SÍMBOLO Y NO HAY NECESIDAD DE CREAR MÁS QUE GENEREN EL MISMO SÍMBOLO.
   std::map<Symbol, Symbol> mapa_aux_1;
   // PARA CADA PRODUCCIÓN DE LA GRAMÁTICA CON NÚMERO DE SÍMBOLOS MAYOR IGUAL QUE 2
   for (auto& production: grammar.productions_) {
     if (production.second.size() >= 2) {
+      // PARA CADA SÍMBOLO DE LA CADENA DE LA PRODUCCIÓN
       for (unsigned int i = 0; i < production.second.size(); ++i) {
         // SI EL SÍMBOLO ES TERMINAL
         if (grammar.alphabet_.FindSymbol(production.second[i])) {
+          // SI NO EXISTE UN SÍMBOLO AUXILIAR QUE LO GENERE, LO CREAMOS.
           if (mapa_aux_1.find(production.second[i]) == mapa_aux_1.end()) {
+            // BUSCAMOS UN SÍMBOLO AUXILIAR QUE NO ESTÉ EN LA GRAMÁTICA.
             while (grammar.non_terminals_.find(Symbol(c)) != grammar.non_terminals_.end()) {
               ++c;
             }
+            // AÑADIMOS EL SÍMBOLO AUXILIAR A LA GRAMÁTICA.
             grammar.non_terminals_.insert(Symbol(c));
+            // AÑADIMOS EL SÍMBOLO AUXILIAR AL MAPA AUXILIAR PARA COMPROBACIONES POSTERIORES.
             mapa_aux_1.insert(std::pair<Symbol, Symbol>(production.second[i], Symbol(c)));
+            // AÑADIMOS LA PRODUCCIÓN DEL SÍMBOLO AUXILIAR A LA GRAMÁTICA.
             grammar.productions_.insert(std::pair<Symbol, std::vector<Symbol>>(mapa_aux_1[production.second[i]], std::vector<Symbol>(1, production.second[i])));
           }
+          // SUSTITUIMOS EL SÍMBOLO TERMINAL POR EL SÍMBOLO AUXILIAR.
           production.second[i] = mapa_aux_1[production.second[i]];
         }
       }
     }
   }
+  // MAPA_AUX_2 SIMILAR A MAPA_AUX_1 PERO SU CLAVE SERÁ UN VECTOR DE SÍMBOLOS PARA ASEGURARNOS QUE TIENE UN SIMBOLO AUXILIAR QUE LO GENERE.
   std::map<std::vector<Symbol>, Symbol> mapa_aux_2;
+  // PARA CADA PRODUCCIÓN DE LA GRAMÁTICA CON NÚMERO DE SÍMBOLOS MAYOR IGUAL QUE 3
   for (auto& production: grammar.productions_) {
     if (production.second.size() >= 3) {
+      // MIENTRAS LA CADENA DE LA PRODUCCIÓN TENGA MÁS DE 2 SÍMBOLOS
       while (production.second.size() > 2) {
+        // VECTOR DE SÍMBOLOS QUE CONTIENE LOS DOS ÚLTIMOS SÍMBOLOS DE LA CADENA DE LA PRODUCCIÓN.
         std::vector<Symbol> chain;
         chain.push_back(production.second[production.second.size() - 2]);
         chain.push_back(production.second[production.second.size() - 1]);
+        // ELIMINAMOS LOS DOS ÚLTIMOS SÍMBOLOS DE LA CADENA DE LA PRODUCCIÓN.
         production.second.pop_back();
         production.second.pop_back();
+        // SI NO EXISTE LA CADENA DE SÍMBOLOS EN EL MAPA AUXILIAR.
         if (mapa_aux_2.find(chain) == mapa_aux_2.end()) {
+          // MIENTRAS EL SÍMBOLO AUXILIAR EXISTA EN LA GRAMÁTICA, BUSCAMOS OTRO.
           while (grammar.non_terminals_.find(Symbol(c)) != grammar.non_terminals_.end()) {
             ++c;
           }
+          // AÑADIMOS EL SÍMBOLO AUXILIAR NO TERMINAL A LA GRAMÁTICA.
           grammar.non_terminals_.insert(Symbol(c));
+          // AÑADIMOS EL SÍMBOLO AUXILIAR AL MAPA AUXILIAR JUNTO CON LA CADENA DE SÍMBOLOS.
           mapa_aux_2.insert(std::pair<std::vector<Symbol>, Symbol>(std::vector<Symbol>(chain), Symbol(c)));
+          // AÑADIMOS LA PRODUCCIÓN DEL SÍMBOLO AUXILIAR A LA GRAMÁTICA.
           grammar.productions_.insert(std::pair<Symbol, std::vector<Symbol>>(mapa_aux_2[chain], chain));
         }
+        // SI EXISTE LA CADENA DE SÍMBOLOS EN EL MAPA AUXILIAR, SUSTITUIMOS LA CADENA DE SÍMBOLOS POR EL SÍMBOLO AUXILIAR.
         production.second.push_back(mapa_aux_2[chain]);
       }
     }
@@ -161,15 +186,21 @@ Grammar Grammar::CFGtoFNC() const {
  * @return std::ostream& 
  */
 std::ostream& operator<<(std::ostream& os, const Grammar& grammar) {
+  // IMPRIMIMOS LA LONGITUD DEL ALFABETO.
   os << grammar.alphabet_.GetSymbols().size() << std::endl;
+  // IMPRIMIMOS LOS SÍMBOLOS DEL ALFABETO.
   for (auto symbol : grammar.alphabet_.GetSymbols()) {
     os << symbol << std::endl;
   }
+  // IMPRIMIMOS LA LONGITUD DE LOS SÍMBOLOS NO TERMINALES.
   os << grammar.non_terminals_.size() << std::endl;
+  // IMPRIMIMOS LOS SÍMBOLOS NO TERMINALES.
   for (auto non_terminal : grammar.non_terminals_) {
     os << non_terminal << std::endl;
   }
+  // IMPRIMIMOS LA LONGITUD DE LAS PRODUCCIONES.
   os << grammar.productions_.size() << std::endl;
+  // IMPRIMIMOS LAS PRODUCCIONES.
   for (auto production : grammar.productions_) {
     os << production.first << " ";
     for (auto symbol : production.second) {
