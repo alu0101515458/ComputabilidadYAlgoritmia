@@ -10,25 +10,34 @@ B
 X
 Y
 Z
-21
+30
 S ASd
 S BXc
 S BYd
 S AZc
-S A
-S B
 S AB
+S Bc
+S Bd
+S Ac
+S Ad
+S aA
+S a
+S bB
+S b
 S &
 A aA
 A a
 B bB
 B b
 X BXc
-X &
+X Bc
 Y BYd
 Y BXc
-Y &
+Y Bd
+Y Bc
+Z bB
+Z b
 Z AZc
 Z BXc
-Z B
-Z &
+Z Ac
+Z Bc

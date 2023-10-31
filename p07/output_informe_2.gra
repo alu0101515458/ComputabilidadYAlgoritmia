@@ -12,7 +12,7 @@ E
 F
 G
 H
-29
+38
 A AA
 A a
 A a
@@ -29,16 +29,25 @@ S AE
 S BF
 S BG
 S AH
-S A
-S B
 S AB
+S BD
+S BC
+S AD
+S AC
+S AA
+S a
+S BB
+S b
 S &
 X BF
-X &
+X BD
 Y BG
 Y BF
-Y &
+Y BC
+Y BD
+Z BB
+Z b
 Z AH
 Z BF
-Z B
-Z &
+Z AD
+Z BD
