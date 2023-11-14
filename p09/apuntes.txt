@@ -1,0 +1,32 @@
+Tape
+  const Symbol SIMBOLO_BLANCO('$')
+
+  Atributos:
+  Alfabeto
+  Puntero
+  Cinta -> list (lista doblemente enlazada)
+
+  Métodos:
+  left() -> insertamos a la izquierda ese elemento y nos posicionamos en ese símbolo blanco.
+  right()
+  write(Symbol)
+  read()
+  WriteOutput(os, string id) -> Imprimir la cadena en cada iteración. ($ q0 a $) -> ($ a q0 a $) -> ($ aa q0 $$) -> ($ aa& q1 &&)
+
+TuringMachine
+  Alfabeto -> representamos blanco con $
+  std::set<State*> grafo_;
+  State* arranque_;
+
+struct Transition
+  symbol -> State* -> WriteSymbol -> Movement
+
+Symbol
+
+State
+  std::multimap<Symbol, Transition>
+
+Alphabet 
+
+Main
+  getline() -> para coger todos los id de aceptación.
