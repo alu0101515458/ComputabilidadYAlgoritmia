@@ -3,6 +3,7 @@
 #include "sub_tree.h"
 #include <iostream>
 #include <iomanip>
+#include <map>
 #include <vector>
 #include <algorithm>
 
@@ -20,6 +21,7 @@ class point_set : public CyA::point_vector {
 
   void write_tree(std::ostream& os) const;
   void write(std::ostream& os) const;
+  void write_dot(std::ostream& os) const;
 
   inline const CyA::tree& get_tree(void) const;
   inline const CyA::point_vector& get_points(void) const;

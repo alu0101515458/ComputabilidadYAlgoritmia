@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "point_types.h"  // Asegúrate de incluir tu archivo de definiciones
 #include "point_set.h"
 
@@ -19,7 +20,7 @@
   * Para limpiar:
   * make clean
 */
-int main() {
+int main(int argc, char* argv[]) {
   // Crear un vector de puntos
   CyA::point_vector points;
 
@@ -29,8 +30,27 @@ int main() {
   // Crear un point_set con los puntos leídos
   point_set ps(points);
 
-  // Calcular el árbol de expansión mínima y emitir el resultado
-  ps.write_tree(std::cout);
+  // Verificar si la opción -d está presente
+  bool dotOutput = false;
+  std::string dotFilename;
+  for (int i = 1; i < argc; ++i) {
+      if (std::string(argv[i]) == "-d") {
+          if (i + 1 < argc) { // Asegurarse de que haya un nombre de archivo después de -d
+              dotOutput = true;
+              dotFilename = argv[i + 1];
+              break;
+          }
+      }
+  }
+  // Si se pide salida DOT, generar archivo DOT
+  if (dotOutput) {
+      std::ofstream dotFile(dotFilename);
+      ps.write_dot(dotFile);
+      dotFile.close();
+  } else {
+      // De lo contrario, imprimir el árbol como se hacía previamente
+      ps.write_tree(std::cout);
+  }
 
   return 0;
 }

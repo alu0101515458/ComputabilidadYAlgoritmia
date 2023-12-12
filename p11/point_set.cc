@@ -52,7 +52,7 @@ void point_set::EMST(void) {
 void point_set::write_tree(std::ostream &os) const {
   os << std::endl;
   for (const CyA::arc &a : emst_) {
-    os << "(" << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC+1) << a.first.first << ", " << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC+1) << a.first.second << ") - (" << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC+1) << a.second.first << ", " << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC+1) << a.second.second << ")" << std::endl;
+    os << "(" << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC) << a.first.first << ", " << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC) << a.first.second << ") - (" << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC) << a.second.first << ", " << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC) << a.second.second << ")" << std::endl;
   }
 
   os << std::endl;
@@ -66,6 +66,26 @@ void point_set::write_tree(std::ostream &os) const {
  */
 void point_set::write(std::ostream &os) const {
   os << (CyA::point_vector &)(*this) << std::endl;
+}
+
+/**
+ * @brief Método que escribe el árbol de expansión mínima en un fichero DOT
+ * 
+ * @param os 
+ */
+void point_set::write_dot(std::ostream &os) const {
+  char c = 'a';
+  std::vector<char> vector_aux;
+    os << "graph {\n";
+    for (const CyA::point& p : *this) {
+        os << "  " << c << " [pos=\"" << p.first << "," << p.second << "!\"]\n";
+        vector_aux.push_back(c);
+        ++c;
+    }
+    for (unsigned int i = 1; i < vector_aux.size(); ++i) {
+      os << "  " << vector_aux[0] << " -- " << vector_aux[i] << std::endl;
+    }
+    os << "}\n";
 }
 
 /**
