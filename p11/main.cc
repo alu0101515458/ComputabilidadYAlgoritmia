@@ -2,6 +2,24 @@
 #include "point_types.h"  // Asegúrate de incluir tu archivo de definiciones
 #include "point_set.h"
 
+/*
+    * Para compilar:
+    * make
+    * 
+    * Para ejecutar:
+    * ./program
+    * (DATOS DE ENTRADA)
+    * 5
+    * 1.0 2.0
+    * 3.4 5.6
+    * 7.8 9.0
+    * 2.3 4.5
+    * 6.7 8.9
+    * 
+    * Para limpiar:
+    * make clean
+    
+*/
 int main() {
     CyA::point_vector points;
 
