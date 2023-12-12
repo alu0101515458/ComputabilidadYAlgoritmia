@@ -2,6 +2,13 @@
 
 #include <iomanip>
 
+/**
+ * @brief Sobrecarga del operador de salida para point_vector
+ * 
+ * @param os 
+ * @param ps 
+ * @return std::ostream& 
+ */
 std::ostream& operator<<(std::ostream& os, const CyA::point_vector& ps) {
   os << ps.size() << std::endl;
   for (const CyA::point& p : ps) {
@@ -10,6 +17,13 @@ std::ostream& operator<<(std::ostream& os, const CyA::point_vector& ps) {
   return os;
 }
 
+/**
+ * @brief Sobrecarga del operador de salida para point
+ * 
+ * @param os 
+ * @param p 
+ * @return std::ostream& 
+ */
 std::ostream& operator<<(std::ostream& os, const CyA::point& p) {
   os << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC)
      << p.first << "\t" << std::setw(MAX_SZ) << std::fixed
@@ -17,6 +31,13 @@ std::ostream& operator<<(std::ostream& os, const CyA::point& p) {
   return os;
 }
 
+/**
+ * @brief Sobrecarga del operador de entrada para point_vector
+ * 
+ * @param is 
+ * @param ps 
+ * @return std::istream& 
+ */
 std::istream& operator>>(std::istream& is, CyA::point_vector& ps) {
   int n;
   is >> n;
@@ -29,6 +50,13 @@ std::istream& operator>>(std::istream& is, CyA::point_vector& ps) {
   return is;
 }
 
+/**
+ * @brief Sobrecarga del operador de entrada para point
+ * 
+ * @param is 
+ * @param p 
+ * @return std::istream& 
+ */
 std::istream& operator>>(std::istream& is, CyA::point& p) {
   is >> p.first >> p.second;
   return is;
