@@ -12,12 +12,15 @@ typedef std::vector<EMST::sub_tree> forest;
 class point_set : public CyA::point_vector {
  private:
   CyA::tree emst_;
+  int max_arcs = 30;
 
  public:
   point_set(const CyA::point_vector& points);
   ~point_set(void);
 
   void EMST(void);
+  // MODIFICACIÓN
+  int verify_max_cost_arcs(void) const;
 
   void write_tree(std::ostream& os) const;
   void write(std::ostream& os) const;
@@ -36,4 +39,7 @@ class point_set : public CyA::point_vector {
   double compute_cost(void) const;
 
   double euclidean_distance(const CyA::arc& a) const;
+
+  // MODIFICACIÓN
+  int get_max_arcs(void) const;
 };

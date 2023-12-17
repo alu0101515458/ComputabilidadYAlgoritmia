@@ -197,3 +197,26 @@ double point_set::euclidean_distance(const CyA::arc &a) const {
   return std::sqrt(std::pow(a.first.first - a.second.first, 2) +
                    std::pow(a.first.second - a.second.second, 2));
 }
+
+// MODIFICACIÓN
+/**
+ * @brief Método que devuelve el número máximo de arcos permitidos.
+ * 
+ * @return int 
+ */
+int point_set::get_max_arcs(void) const { return max_arcs; }
+
+/**
+ * @brief Método que verifica todos los arcos del arbol, si alguno sobrepasa el máximo permitido, lo muestra por pantalla.
+ * 
+ * @return int
+ */
+int point_set::verify_max_cost_arcs(void) const {
+  int count = 0;
+  for (const CyA::arc &a : emst_) {
+    if (euclidean_distance(a) > get_max_arcs()) {
+      ++count;
+    }
+  }
+  return count;
+}

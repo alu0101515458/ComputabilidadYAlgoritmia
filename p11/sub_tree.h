@@ -18,6 +18,7 @@ namespace EMST {
   
     double get_cost(void) const;
     const CyA::tree get_arcs(void) const;
+    int get_max_arcs(void) const;
 
    private:
     CyA::tree arcs_;

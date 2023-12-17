@@ -215,12 +215,6 @@ FA FA::SubassemblyConstruction() const {
   // EPSILON-CLAUSURA DEL ESTADO INICIAL.
   std::set<State*> q0 = EpsilonClausura({inicial_});
 
-  // std::cout << "e-clausura({" << inicial_->GetIdentifier() << "}) = {";
-  // for (State* state: q0) {
-  //   std::cout << state->GetIdentifier() << ", ";
-  // }
-  // std::cout << "}" << std::endl;
-
   // CONJUNTO DE ESTADOS DEL DFA.
   std::set<std::set<State*>> estadosDFA;
   // PILA PARA LOS ESTADOS SIN PROCESAR.

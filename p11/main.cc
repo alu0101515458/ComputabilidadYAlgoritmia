@@ -52,5 +52,9 @@ int main(int argc, char* argv[]) {
       ps.write_tree(std::cout);
   }
 
+  // MODIFICACIÓN
+  std::cout << "CONTADOR: ";
+  int contador = ps.verify_max_cost_arcs();
+  std::cout << contador << std::endl;
   return 0;
 }
