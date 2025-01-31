@@ -35,4 +35,6 @@ int main(int argc, char* argv[]) {
     // De lo contrario, imprimir el árbol como se hacía previamente
     ps.write_hull(std::cout);
   }
+  // MODIFICACIÓN
+  std::cout << "Profundidad de la recursividad: " << ps.get_depth() << std::endl;
 }

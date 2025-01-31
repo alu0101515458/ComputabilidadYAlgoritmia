@@ -12,6 +12,9 @@ enum side { LEFT = -1, CENTER, RIGHT };
 class point_set : public point_vector {
  private:
   point_vector hull_;
+  // MODIFICACIÓN
+  // parámetro para calcular la profundidad de la recursividad con un contador.
+  int depth_ = 0;
 
  public:
   point_set(const std::vector<point> &points);
@@ -25,6 +28,8 @@ class point_set : public point_vector {
 
   const point_vector& get_hull(void);
   const point_vector& get_points(void);
+  // MODIFICACIÓN
+  int get_depth(void);
 
  private:
   void quickHull(const line &l, int side);

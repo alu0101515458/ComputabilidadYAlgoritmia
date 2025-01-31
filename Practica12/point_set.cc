@@ -100,6 +100,15 @@ const point_vector& point_set::get_points(void) {
 }
 
 /**
+ * @brief Método que devuelve la profundidad de la recursividad
+ * 
+ * @return const int 
+ */
+int point_set::get_depth(void) {
+  return depth_;
+}
+
+/**
  * @brief Método que calcula el convex hull con parametros.
  * 
  * @param l 
@@ -109,6 +118,7 @@ void point_set::quickHull(const line &l, int side) {
   point farthest;
 
   if (farthest_point(l, side, farthest)) {
+    depth_++;
     quickHull(line(l.first, farthest),
               -find_side(line(l.first, farthest), l.second));
     quickHull(line(farthest, l.second),
