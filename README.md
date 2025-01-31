@@ -16,11 +16,14 @@ Las prácticas están orientadas a consolidar los fundamentos teóricos mediante
 
 ## Estructura del Repositorio
 
-- `p02/`: Operaciones con cadenas y alfabetos
-- `p05/`: Implementación básica de Autómatas Finitos
-- `p06/`: Extensión de Autómatas Finitos con funcionalidades adicionales
-- `p07/`: Implementación de Gramáticas
-- `p09/`: Implementación de Máquina de Turing
+- `Practica01/`: Contenedores asociativos en C++
+- `Practica02/`: Operaciones con cadenas y alfabetos
+- `Practica05/`: Implementación de un simulador de autómatas finitos
+- `Practica06/`: Conversión de NFA a DFA
+- `Practica07/`: Gramáticas en Forma Normal de Chomsky
+- `Practica09/`: Implementación de un simulador de máquinas de Turing
+- `Practica11/`: Algoritmos Voraces
+- `Practica12/`: Divide y Vencerás
 
 Cada carpeta contiene el código fuente en C++, junto con la documentación necesaria para comprender y ejecutar cada práctica.
 
